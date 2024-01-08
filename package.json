@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ethers": "^6.9.2",
+    "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.0.4"
+    "react-modal": "^3.16.1"
   }
 }

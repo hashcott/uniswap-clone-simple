@@ -21,7 +21,7 @@
 }
 
 .logo .first {
-  color: #FF9555;
+  color: #ff9555;
   letter-spacing: 0.05em;
 }
 
@@ -45,7 +45,7 @@
 
 .navCenter li.navItem:hover {
   color: #fff;
-  text-decoration: underline #FF9555 0.2rem;
+  text-decoration: underline #ff9555 0.2rem;
   text-underline-offset: 0.4rem;
 }
 
@@ -58,9 +58,50 @@
   font-weight: 600;
   cursor: pointer;
 }
-
 .button:hover {
   background: rgba(var(--card-rgb), 0.3);
+}
+
+.buttonTransfer {
+  margin-top: 0.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+  background: rgb(49, 28, 49);
+  border-radius: var(--border-radius);
+  border: none;
+  padding: 1rem 2rem;
+  color: rgb(252, 114, 255);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wrappedInput {
+  position: relative;
+  width: 100%;
+}
+
+.buttonCoin {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  background-color: rgba(var(--card-rgb), 0.1);
+  outline: none;
+  border: none;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+.buttonCoin span {
+  display: flex;
+  right: 0;
+  font-weight: 300;
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  /* remove line height */
+  line-height: 1;
 }
 
 /* END NAV */
@@ -78,6 +119,7 @@
 }
 
 .card {
+  position: relative;
   padding: 1.6rem 1.2rem;
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0.1);
@@ -130,7 +172,7 @@
 }
 
 .wrappedBox:hover {
-  background-color: rgba(27, 27, 27,0.8);
+  background-color: rgba(27, 27, 27, 0.8);
   cursor: pointer;
 }
 
@@ -141,7 +183,6 @@
   justify-content: center;
   align-items: center;
 }
-
 
 /* END MY CUSTOM */
 
@@ -159,7 +200,7 @@
   width: 480px;
   height: 360px;
   margin-left: -400px;
-  z-index: -1; 
+  z-index: -1;
   /* MY FIXED */
 }
 
@@ -168,13 +209,12 @@
   width: 240px;
   height: 180px;
   z-index: -1;
-    /* MY FIXED */
-
+  /* MY FIXED */
 }
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -188,11 +228,9 @@
   }
 }
 
-
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
     grid-template-columns: repeat(2, 50%);
   }
 }
-
