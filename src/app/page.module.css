@@ -21,7 +21,7 @@
 }
 
 .logo .first {
-  color: #FF9555;
+  color: #ff9555;
   letter-spacing: 0.05em;
 }
 
@@ -45,7 +45,7 @@
 
 .navCenter li.navItem:hover {
   color: #fff;
-  text-decoration: underline #FF9555 0.2rem;
+  text-decoration: underline #ff9555 0.2rem;
   text-underline-offset: 0.4rem;
 }
 
@@ -84,6 +84,16 @@
   border: 1px solid rgba(var(--card-border-rgb), 0.15);
 }
 
+.cardInput {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  background: rgba(var(--card-rgb), 0.1);
+  border: 1px solid rgba(var(--card-border-rgb), 0.15);
+}
+
 .card span {
   display: inline-block;
   transition: transform 200ms;
@@ -114,8 +124,12 @@
   transition: border-color 200ms;
   z-index: 2;
   outline: none;
-  /* remove control number input */
-  appearance: none;
+}
+
+.inputNumber::-webkit-inner-spin-button,
+.inputNumber::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .wrappedBox {
@@ -130,7 +144,7 @@
 }
 
 .wrappedBox:hover {
-  background-color: rgba(27, 27, 27,0.8);
+  background-color: rgba(27, 27, 27, 0.8);
   cursor: pointer;
 }
 
@@ -142,6 +156,31 @@
   align-items: center;
 }
 
+.coin {
+  /* position: absolute;
+  max-width: 120px;
+  min-width: 90px;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%); */
+  max-width: 120px;
+  min-width: 90px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.6rem;
+  border-radius: var(--border-radius);
+  background: rgba(var(--card-rgb), 0.2);
+  border: 1px solid rgba(var(--card-border-rgb), 0.15);
+}
+.coin img {
+  margin-right: 0.5rem;
+}
+
+.balance {
+  color: rgb(155, 155, 155);
+  margin-top: 1rem;
+}
 
 /* END MY CUSTOM */
 
@@ -159,7 +198,7 @@
   width: 480px;
   height: 360px;
   margin-left: -400px;
-  z-index: -1; 
+  z-index: -1;
   /* MY FIXED */
 }
 
@@ -168,13 +207,12 @@
   width: 240px;
   height: 180px;
   z-index: -1;
-    /* MY FIXED */
-
+  /* MY FIXED */
 }
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -188,11 +226,9 @@
   }
 }
 
-
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
     grid-template-columns: repeat(2, 50%);
   }
 }
-

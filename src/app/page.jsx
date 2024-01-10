@@ -1,9 +1,36 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import { ethers } from "ethers";
 import styles from "./page.module.css";
 import { Card } from "./component/Card";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [account, setAccount] = useState(null);
+  const [balance, setBalance] = useState(null);
+
+  const [firstCoin, setFirstCoin] = useState("");
+  const [secondCoin, setSecondCoin] = useState("");
+
+  useEffect(() => {}, []);
+  const connectWallet = async () => {
+    if (typeof window.ethereum === undefined) {
+      alert("Please install MetaMask first.");
+      return;
+    }
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+    setAccount(accounts[0]);
+    const balance = await provider.getBalance(accounts[0]);
+    setBalance(ethers.utils.formatEther(balance));
+
+    await window.ethereum.on("accountsChanged", (accounts) => {
+      setAccount(accounts[0]);
+    });
+  };
+
   return (
     <main className={styles.main}>
       <nav className={styles.nav}>
@@ -26,14 +53,26 @@ export default function Home() {
           </li>
         </ul>
         <div className={styles.navRight}>
-          <button className={styles.button}>CONNECT</button>
+          <button onClick={() => connectWallet()} className={styles.button}>
+            {account
+              ? account.slice(0, 7) +
+                "..." +
+                account.slice(account.length - 5, account.length)
+              : "Connect Wallet"}
+          </button>
         </div>
       </nav>
 
       <div className={styles.center}>
         {/* write card component */}
         <div className={styles.card}>
-          <Card name="You pay" />
+          <Card
+            name="You pay"
+            coinSymbol="eth"
+            setValue={setFirstCoin}
+            balance={balance}
+            value={firstCoin}
+          />
           {/* generate html for box  */}
           <div className={styles.wrappedBox}>
             <div className={styles.box}>
@@ -46,7 +85,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <Card name="You receive" />
+          <Card name="You receive" setValue={setSecondCoin} coinSymbol="uni" />
         </div>
       </div>
     </main>
