@@ -3,7 +3,7 @@ pragma solidity ^0.8.22;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
-import "./String.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract CustomToken is ERC20 {
     constructor(
@@ -26,7 +26,7 @@ contract CustomToken is ERC20 {
 }
 
 contract Uniswap {
-    using String for string;
+    using Strings for string;
     using Math for uint;
     // VietNamDong => VND , UnitedStatesDollar = > USD,  AustralianDollar => AUD
     string[] public tokenNames = [
