@@ -21,6 +21,7 @@ export const Card = (props) => {
       }
 
       const prices = await props.contract.priceOfTokens("USD");
+
       const tokenPredict = BigNumber.from(
         (number * Math.pow(10, 18)).toString()
       ).div(prices);

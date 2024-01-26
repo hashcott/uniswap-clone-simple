@@ -11,6 +11,7 @@ export default function Home() {
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(null);
   const [contract, setContract] = useState(null);
+  const [provider, setProvider] = useState(null);
 
   const [firstCoin, setFirstCoin] = useState("");
   const [secondCoin, setSecondCoin] = useState("");
@@ -28,7 +29,7 @@ export default function Home() {
     }
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-
+    setProvider(provider);
     // read-write contract
     const signer = provider.getSigner(); // bo sung
 
@@ -63,10 +64,20 @@ export default function Home() {
   };
 
   const convert = async () => {
+    // push transaction to network
     const result = await contract.swapEthToToken("USD", {
-      value: ethers.utils.parseEther(firstCoin.toString()), // optional
+      value: ethers.utils.parseEther(firstCoin.toString()),
+      // optional
     });
-    alert("Ban da mua " + ethers.utils.formatEther(result) + " USD");
+
+    // wait for transaction done
+
+    await provider.waitForTransaction(result.hash);
+
+    // get balance
+    const balanceUsd = await contract.getBalance("USD", account);
+
+    alert("Total USD: " + ethers.utils.formatEther(balanceUsd) + " USD");
   };
 
   return (
