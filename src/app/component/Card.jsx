@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
-
+import { BigNumber } from "ethers";
 import styles from "../page.module.css";
 
 export const Card = (props) => {
   const inputRef = React.useRef(null);
-  const onChange = (e) => {
+
+  useEffect(() => {
+    if (props.value) {
+      inputRef.current.value = props.value;
+    }
+  }, [props.value]);
+
+  const onChange = async (e) => {
     if (/[+-]?([0-9]*[.])?[0-9]+/.test(e.target.value)) {
       let number = parseFloat(e.target.value);
       if (number > parseFloat(props.balance)) {
         number = parseFloat(props.balance);
         inputRef.current.value = number.toFixed(3);
       }
+
+      const prices = await props.contract.priceOfTokens("USD");
+      const tokenPredict = BigNumber.from(
+        (number * Math.pow(10, 18)).toString()
+      ).div(prices);
+
+      // set state
+      // set first coin
       props.setValue(number);
+      // set second coin
+      props.setValue2(tokenPredict.toString());
     }
   };
   return (

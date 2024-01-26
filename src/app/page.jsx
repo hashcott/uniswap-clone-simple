@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ethers, BigNumber, FixedNumber } from "ethers";
 import styles from "./page.module.css";
 import { Card } from "./component/Card";
-import Uniswap from "../../contracts/Uniswap.json";
+import Uniswap from "../../contracts/Uniswap.json"; // step 1
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -16,6 +16,12 @@ export default function Home() {
   const [secondCoin, setSecondCoin] = useState("");
   useEffect(() => {}, []);
   const connectWallet = async () => {
+    if (contract) {
+      const balanceUsd = await contract.getBalance("USD", account);
+      alert("Ban co " + ethers.utils.formatEther(balanceUsd) + " USD");
+      return;
+    }
+
     if (typeof window.ethereum === undefined) {
       alert("Please install MetaMask first.");
       return;
@@ -24,20 +30,20 @@ export default function Home() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
     // read-write contract
-    const signer = provider.getSigner();
+    const signer = provider.getSigner(); // bo sung
 
     const accounts = await provider.send("eth_requestAccounts", []);
     setAccount(accounts[0]);
     const balance = await provider.getBalance(accounts[0]);
     setBalance(ethers.utils.formatEther(balance));
 
-    const contract = new ethers.Contract(
-      "0x270638B60B1819fAd96EB33AfF01bfF555F48B8B",
-      Uniswap.abi,
+    const contractConntection = new ethers.Contract( // step 2
+      "0x270638B60B1819fAd96EB33AfF01bfF555F48B8B", // address of contract deployed on blockchain (sepolia)
+      Uniswap.abi, // abi of contract
       signer // read-write contract
     );
 
-    setContract(contract);
+    setContract(contractConntection);
 
     // payable
     // const result = await contract.swapEthToToken("USD", {
@@ -46,7 +52,7 @@ export default function Home() {
     // console.log(result);
     // trick lord
 
-    const balanceUsd = await contract.getBalance("USD", accounts[0]);
+    const balanceUsd = await contractConntection.getBalance("USD", accounts[0]);
     alert("Ban co " + ethers.utils.formatEther(balanceUsd) + " USD");
 
     // console.log(+ethers.utils.formatEther(balanceUsd).toString());
@@ -101,7 +107,9 @@ export default function Home() {
           <Card
             name="You pay"
             coinSymbol="eth"
+            contract={contract}
             setValue={setFirstCoin}
+            setValue2={setSecondCoin}
             balance={balance}
             value={firstCoin}
           />
@@ -117,7 +125,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <Card name="You receive" setValue={setSecondCoin} coinSymbol="usd" />
+          <Card name="You receive" value={secondCoin} coinSymbol="usd" />
 
           <button
             style={{
